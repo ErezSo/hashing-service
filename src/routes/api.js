@@ -5,7 +5,7 @@ import hashing from "../hashing_service";
 
 const router = express.Router();
 
-router.route("/save_asset").post((req, res) => {
+function saveAsset(req, res) {
   if (!req.body.asset || !req.body.secret) {
     return res.status(400).send("An asset and/or a secret is missing");
   }
@@ -38,7 +38,32 @@ router.route("/save_asset").post((req, res) => {
         res.status(400).send("Sorry. Something went wrong");
       })
   );
-});
+}
+
+function fetchAsset(req, res) {
+  const { hash } = req.params;
+  if (!hash) {
+    return res.status(400).send("A hash is missing");
+  }
+  return new Promise((resolve, reject) => {
+    fs.readFile("./assets.json", "utf-8", (err, data) => {
+      if (err) {
+        console.error(err);
+        return reject();
+      }
+      const assets = JSON.parse(data);
+      return assets[hash] ? resolve(assets[hash]) : resolve(false);
+    });
+  }).then(asset => {
+    if (asset === false) {
+      return res.status(400).send("The asset you're asking for doesn't exist");
+    }
+    return res.status(200).send(asset);
+  });
+}
+
+router.route("/save_asset").post(saveAsset);
+router.route("/fetch_asset/:hash").get(fetchAsset);
 
 /**
  * Middleware for handling errors when attempting retrival
