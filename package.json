@@ -4,15 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "babel-node app.js",
+    "start": "nodemon --exec babel-node app.js",
     "test": "jest",
-    "jest:watch": "jest --watch",
+    "test:watch": "jest --watch",
     "lint": "eslint"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-jest": "^22.4.3",
     "babel-preset-env": "^1.7.0",
     "babel-register": "^6.26.0",
     "eslint": "^4.19.1",
@@ -21,9 +23,12 @@
     "eslint-plugin-import": "^2.11.0",
     "eslint-plugin-prettier": "^2.6.0",
     "jest": "^22.4.3",
-    "prettier": "^1.12.1"
+    "nodemon": "^1.17.4",
+    "prettier": "^1.12.1",
+    "regenerator-runtime": "^0.11.1"
   },
   "dependencies": {
+    "body-parser": "^1.18.2",
     "express": "^4.16.3"
   }
 }
