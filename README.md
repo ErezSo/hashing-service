@@ -1,6 +1,6 @@
 # Hashing Service
 
-Store assets in a file system with the asset's modified hash as a key. POST `/save_asset`
+Store assets in a file system with the asset's modified hash as a key. POST `/save_asset`.
 Fetch an asset from the file system with the returned modified key that was recieved after storing. GET `/fetch_asset/:hash`.
 
 ### Installation
