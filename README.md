@@ -1,8 +1,7 @@
 # Hashing Service
 
-Store assets in a file system with the asset's modified hash as a key - `/save_asset`.
-
-Fetch an asset from the file system with the returned modified key that was recieved after storing - `/fetch_asset/:hash`.
+Store assets in a file system with the asset's modified hash as a key. POST `/save_asset`
+Fetch an asset from the file system with the returned modified key that was recieved after storing. GET `/fetch_asset/:hash`.
 
 ### Installation
 
@@ -14,7 +13,7 @@ $ yarn
 $ npm install
 ```
 
-### Run the service production
+### Run the service in production
 
 ```sh
 $ yarn start
