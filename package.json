@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --exec babel-node app.js",
+    "dev": "NODE_ENV=development nodemon --exec babel-node app.js",
+    "start": "NODE_ENV=production babel-node app.js",
     "test": "jest --forceExit",
     "test:watch": "jest --watch",
     "lint": "eslint"
