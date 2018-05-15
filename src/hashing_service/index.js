@@ -1,8 +1,10 @@
 import crypto from "crypto";
 
-const hashing = (asset, secret) =>
+const KEY = "woof";
+
+const hashing = asset =>
   crypto
-    .createHmac("sha256", secret)
+    .createHmac("sha256", KEY)
     .update(asset)
     .digest("hex");
 
