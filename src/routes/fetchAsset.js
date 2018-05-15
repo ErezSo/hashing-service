@@ -7,36 +7,44 @@ function fetchAsset(req, res) {
   if (!hash) {
     return res.status(400).send("A hash is missing");
   }
-  return new Promise(resolve =>
-    fs.stat(path, err => {
+  const fileNumber = hash.match(":") ? hash.match(/^(\d):/)[1] : false;
+
+  if (!fileNumber) {
+    return res.status(400).send("The hash is wrong");
+  }
+
+  return new Promise((resolve, reject) => {
+    return fs.stat(`${path}/assets${fileNumber}.json`, err => {
       if (err) {
-        resolve(false);
+        return reject(err);
       }
-      resolve();
-    })
-  ).then(nodir =>
-    new Promise((resolve, reject) => {
-      if (nodir === false) {
-        return resolve(false);
-      }
-      return fs.readFile(`${path}/assets.json`, "utf-8", (err, data) => {
-        if (err) {
-          return reject(err);
-        }
-        const assets = JSON.parse(data);
-        return Object.hasOwnProperty.call(assets, hash)
-          ? resolve(assets[hash])
-          : resolve(false);
+      return resolve();
+    });
+  })
+    .then(() => {
+      return new Promise((resolve, reject) => {
+        return fs.readFile(
+          `${path}/assets${fileNumber}.json`,
+          "utf-8",
+          (err, data) => {
+            if (err) {
+              return reject(err);
+            }
+            const assets = JSON.parse(data);
+            return Object.hasOwnProperty.call(assets, hash)
+              ? resolve(assets[hash])
+              : reject();
+          }
+        );
       });
-    }).then(asset => {
-      if (asset === false) {
-        return res
-          .status(404)
-          .send("The asset you're asking for doesn't exist");
-      }
+    })
+    .then(asset => {
       return res.status(200).send(asset);
     })
-  );
+    .catch(err => {
+      console.error(err); // eslint-disable-line no-console
+      res.status(404).send("The asset you're asking for doesn't exist");
+    });
 }
 
 export default fetchAsset;

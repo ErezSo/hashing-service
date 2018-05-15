@@ -1,3 +1,4 @@
+/* eslint no-console:0 */
 import request from "supertest";
 import fs from "fs";
 import server from "../../app";
@@ -22,8 +23,8 @@ function deleteFolderRecursive(pathToDelete) {
 
 describe("API", () => {
   const asset = "See you in the next life, Jack!";
-  const hash =
-    "84345bcf2be3296a3faee0d8a0dab3b450b224e1969c56cb58759a4edc7fdc72";
+  const fileNumber = 1;
+  const hash = `${fileNumber}:84345bcf2be3296a3faee0d8a0dab3b450b224e1969c56cb58759a4edc7fdc72`;
 
   beforeAll(() => {
     deleteFolderRecursive(path);
@@ -41,7 +42,7 @@ describe("API", () => {
         expect(res.text).toBe(hash);
       })
       .catch(err => {
-        throw new Error(err);
+        console.error(err);
       }));
 
   test("failing POST request", () =>
@@ -49,28 +50,51 @@ describe("API", () => {
       .post("/save_asset")
       .expect(404)
       .then(res => {
-        expect(res.text).toBe("An asset and/or a secret is missing");
+        expect(res.text).toBe("An asset is missing");
       })
       .catch(err => {
-        throw new Error(err);
+        console.error(err);
       }));
 
-  test("failing GET request", () =>
+  test("failing GET request - illegal hash", () =>
     api
       .get(`/fetch_asset/asdf`)
+      .expect(400)
+      .then(res => {
+        expect(res.text).toBe("The hash is wrong");
+      })
+      .catch(err => {
+        console.error(err);
+      }));
+
+  test("failing GET request - wrong hash", () => {
+    if (!fs.existsSync(path)) {
+      fs.mkdirSync(path);
+    }
+    fs.writeFileSync(
+      `${path}/assets${fileNumber}.json`,
+      JSON.stringify({ [hash]: asset })
+    );
+
+    return api
+      .get(`/fetch_asset/1:asdf`)
       .expect(404)
       .then(res => {
         expect(res.text).toBe("The asset you're asking for doesn't exist");
       })
       .catch(err => {
-        throw new Error(err);
-      }));
+        console.error(err);
+      });
+  });
 
   test("successful GET request", () => {
     if (!fs.existsSync(path)) {
       fs.mkdirSync(path);
     }
-    fs.writeFileSync(`${path}/assets.json`, JSON.stringify({ [hash]: asset }));
+    fs.writeFileSync(
+      `${path}/assets${fileNumber}.json`,
+      JSON.stringify({ [hash]: asset })
+    );
 
     return api
       .get(`/fetch_asset/${hash}`)
@@ -79,7 +103,17 @@ describe("API", () => {
         expect(res.text).toBe(asset);
       })
       .catch(err => {
-        throw new Error(err);
+        console.error(err);
       });
   });
+
+  test("Error on wrong path", () =>
+    api
+      .get("/asdf")
+      .then(res => {
+        expect(res.status).toBe(404);
+      })
+      .catch(err => {
+        console.error(err);
+      }));
 });
