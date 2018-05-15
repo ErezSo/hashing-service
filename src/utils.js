@@ -1,6 +1,6 @@
 export default function findHighestNumber(arr) {
   const filesArr = arr.length > 1 ? true : arr[0] || 0;
-  // Reordering the files list to get the highest number - can't surely know that the last in the array is the highest
+  // Reordering the items to get the highest number - can't surely know that the last in the array is the highest.
   const heighestNumberInString =
     filesArr &&
     arr
