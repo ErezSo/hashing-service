@@ -4,8 +4,8 @@ const { findHighestNumber } = require("../utils");
 
 const path = `${__dirname}/../../assets`;
 const BYTE = 1000;
-// File size threshold of 16MB === ~100K records
-const fileThreshold = 16 * BYTE;
+// File size threshold of 1.5MB === ~10K records
+const fileThreshold = 1.5 * BYTE;
 
 function saveAsset(req, res) {
   if (!req.body.asset) {
