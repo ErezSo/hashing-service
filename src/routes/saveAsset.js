@@ -1,6 +1,6 @@
-import fs from "fs";
-import hashing from "../hashing_service";
-import findHighestNumber from "../utils";
+const fs = require("fs");
+const hashing = require("../hashing_service");
+const { findHighestNumber } = require("../utils");
 
 const path = `${__dirname}/../../assets`;
 const BYTE = 1000;
@@ -91,4 +91,4 @@ function saveAsset(req, res) {
     });
 }
 
-export default saveAsset;
+module.exports = saveAsset;

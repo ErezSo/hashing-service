@@ -1,4 +1,4 @@
-import fs from "fs";
+const fs = require("fs");
 
 const path = `${__dirname}/../../assets`;
 
@@ -47,4 +47,4 @@ function fetchAsset(req, res) {
     });
 }
 
-export default fetchAsset;
+module.exports = fetchAsset;

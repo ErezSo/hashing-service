@@ -1,8 +1,9 @@
 /* eslint no-console:0 */
 
-import express from "express";
-import bodyParser from "body-parser";
-import api, { errorsMiddleware } from "./src/routes/api";
+const express = require("express");
+const bodyParser = require("body-parser");
+const api = require("./src/routes/api");
+const { errorsMiddleware } = require("./src/routes/api");
 
 const app = express();
 const port = process.env.PORT || 3002;
@@ -25,4 +26,4 @@ app.listen(port, err => {
   }
 });
 
-export default app;
+module.exports = app;

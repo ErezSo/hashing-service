@@ -1,4 +1,4 @@
-import findHighestNumber from "./utils";
+const { findHighestNumber } = require("./utils");
 
 describe("findHighestNumber", () => {
   it("should return the highest number from several items", () => {

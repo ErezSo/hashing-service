@@ -1,7 +1,7 @@
 /* eslint no-console:0 */
-import request from "supertest";
-import fs from "fs";
-import server from "../../app";
+const request = require("supertest");
+const fs = require("fs");
+const server = require("../../app");
 
 const api = request(server);
 const path = `${__dirname}/../../assets`;

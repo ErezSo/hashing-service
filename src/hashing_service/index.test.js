@@ -1,4 +1,4 @@
-import hashing from "./index";
+const hashing = require("./index");
 
 test("hashing", () => {
   const asset = "See you in the next life, Jack!";

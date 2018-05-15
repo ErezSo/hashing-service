@@ -1,4 +1,4 @@
-import crypto from "crypto";
+const crypto = require("crypto");
 
 const KEY = "woof";
 
@@ -8,4 +8,4 @@ const hashing = asset =>
     .update(asset)
     .digest("hex");
 
-export default hashing;
+module.exports = hashing;

@@ -17,17 +17,17 @@ $ npm install
 ### Run the service in production
 
 ```sh
-$ yarn start
+$ yarn prod
 // or
-$ npm start
+$ npm run prod
 ```
 
 ### Run the service locally in dev mode
 
 ```sh
-$ yarn dev
+$ yarn start
 // or
-$ npm run dev
+$ npm start
 ```
 
 ### Run unit tests
